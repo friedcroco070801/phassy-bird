@@ -30,6 +30,9 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('bird2', 'src/resources/sprite/redbird-upflap.png');
     this.load.image('bird3', 'src/resources/sprite/redbird-midflap.png');
     this.load.image('bird4', 'src/resources/sprite/redbird-downflap.png');
+    this.load.audio('fly', 'src/resources/audio/Wing.mp3');
+    this.load.audio('score', 'src/resources/audio/Point.mp3');
+    this.load.audio('hit', 'src/resources/audio/Hit.mp3');
   }
 
   create(): void {
@@ -93,7 +96,6 @@ export default class GameScene extends Phaser.Scene {
         // Start play
         this.isMoving = true;
         this.bird?.setIgnoreGravity(false);
-        this.bird?.setPlay(true);
         this.title?.destroy();
         this.instruction?.destroy();
 
@@ -103,9 +105,8 @@ export default class GameScene extends Phaser.Scene {
         this.score.setDepth(4);
         this.score.setScore(0);
       }
-      else {
-        this.bird?.setPlay(true);
-      }
+      this.bird?.setPlay(true);
+      this.sound.play('fly');
     }, this)
 
     // Set collision event
@@ -173,6 +174,7 @@ export default class GameScene extends Phaser.Scene {
       if ((catA == BIRD_BITMASK && catB == BASE_BITMASK) || (catA == BASE_BITMASK && catB == BIRD_BITMASK)) {
         this.bird?.setAlive(false);
         if (this.isMoving) {
+          this.sound.play('hit');
           this.isMoving = false;
           this.isAlive = false;
           for (let body of this.movers) {
@@ -216,6 +218,7 @@ export default class GameScene extends Phaser.Scene {
           this.matter.world.remove(pair.bodyB);
         }
         this.score?.setScore(this.score?.getScore() + 1);
+        this.sound.play('score');
       }
     }
   }
