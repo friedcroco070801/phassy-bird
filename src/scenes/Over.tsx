@@ -12,8 +12,8 @@ export default class OverScene extends Phaser.Scene {
     }
 
     preload(): void {
-        this.load.image('background', 'src/resources/sprite/background-day-extended.png');
-        this.load.image('base', 'src/resources/sprite/base.png');
+        this.load.image('background', 'assets/sprite/background-day-extended.png');
+        this.load.image('base', 'assets/sprite/base.png');
     }
 
     create(): void {

@@ -12,7 +12,7 @@ function loadFont(name: string, url: string) {
   });
 }
 
-loadFont('rainy', 'src/resources/font/rainyhearts.ttf');
+loadFont('rainy', 'assets/font/rainyhearts.ttf');
 
 new Phaser.Game(
   Object.assign(config, {

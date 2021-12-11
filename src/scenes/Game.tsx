@@ -20,19 +20,19 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
-    for (var i = 0; i <= 9; i++) this.load.image(`score${i}`, `src/resources/sprite/${i}.png`);
-    this.load.image('background', 'src/resources/sprite/background-day-extended.png');
-    this.load.image('base', 'src/resources/sprite/base.png');
-    this.load.image('instruction', 'src/resources/sprite/message.png');
-    this.load.image('title', 'src/resources/sprite/Title.png');
-    this.load.image('pipe', 'src/resources/sprite/pipe-green.png');
-    this.load.image('bird1', 'src/resources/sprite/redbird-midflap.png');
-    this.load.image('bird2', 'src/resources/sprite/redbird-upflap.png');
-    this.load.image('bird3', 'src/resources/sprite/redbird-midflap.png');
-    this.load.image('bird4', 'src/resources/sprite/redbird-downflap.png');
-    this.load.audio('fly', 'src/resources/audio/Wing.mp3');
-    this.load.audio('score', 'src/resources/audio/Point.mp3');
-    this.load.audio('hit', 'src/resources/audio/Hit.mp3');
+    for (var i = 0; i <= 9; i++) this.load.image(`score${i}`, `assets/sprite/${i}.png`);
+    this.load.image('background', 'assets/sprite/background-day-extended.png');
+    this.load.image('base', 'assets/sprite/base.png');
+    this.load.image('instruction', 'assets/sprite/message.png');
+    this.load.image('title', 'assets/sprite/Title.png');
+    this.load.image('pipe', 'assets/sprite/pipe-green.png');
+    this.load.image('bird1', 'assets/sprite/redbird-midflap.png');
+    this.load.image('bird2', 'assets/sprite/redbird-upflap.png');
+    this.load.image('bird3', 'assets/sprite/redbird-midflap.png');
+    this.load.image('bird4', 'assets/sprite/redbird-downflap.png');
+    this.load.audio('fly', 'assets/audio/Wing.mp3');
+    this.load.audio('score', 'assets/audio/Point.mp3');
+    this.load.audio('hit', 'assets/audio/Hit.mp3');
   }
 
   create(): void {
