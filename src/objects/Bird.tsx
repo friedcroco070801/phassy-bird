@@ -17,9 +17,9 @@ export default class Bird extends Phaser.Physics.Matter.Sprite {
         this.anims.play('flap');
 
         // Set physics options
-        this.setCircle(15, {
-
-        });
+        this.setCircle(15);
+        this.setBounce(0.2);
+        this.setMass(0.0000001);
         this.setCollisionCategory(BIRD_BITMASK);
         this.setCollidesWith([BASE_BITMASK, POINT_BITMASK]);
     }
