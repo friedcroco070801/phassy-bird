@@ -14,7 +14,7 @@ export default {
     default: 'matter',
     matter: {
       debug: false,
-      enableSleeping: true,
+      enableSleeping: false,
       gravity: {
         x: 0,
         y: 1.5

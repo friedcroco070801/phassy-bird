@@ -3,6 +3,7 @@ import config from '../config';
 
 export default class OverScene extends Phaser.Scene {
     private score: number = 0;
+    private disabled: boolean = false;
     constructor() {
         super('OverScene');
     }
@@ -17,6 +18,8 @@ export default class OverScene extends Phaser.Scene {
     }
 
     create(): void {
+        this.disabled = false;
+
         // Set fade in
         this.cameras.main.fadeIn(500);
 
@@ -41,15 +44,23 @@ export default class OverScene extends Phaser.Scene {
         score.setOrigin(0.5);
 
         // Return to game scene upon click
-        // Click screen event
-        this.input.on('pointerdown', () => {
+        this.input.once('pointerdown', () => {
             this.cameras.main.fadeOut(500);
             this.time.addEvent({
-            delay: 500,
-            callback: () => {
-                this.scene.start('GameScene');
-            },
-            callbackScope: this
+                delay: 0,
+                callback: () => {
+                    if (!this.disabled) {
+                        this.disabled = true;
+                        this.time.addEvent({
+                            delay: 500,
+                            callback: () => {
+                                this.scene.start('GameScene');
+                            },
+                            callbackScope: this
+                        })
+                    }
+                },
+                callbackScope: this
             })
         }, this)
     }

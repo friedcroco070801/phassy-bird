@@ -36,6 +36,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    // Set fade in
+    this.cameras.main.fadeIn(500);
+
     // Reset parameters
     this.title = null;
     this.instruction = null;
@@ -72,10 +75,9 @@ export default class GameScene extends Phaser.Scene {
     this.base.setCollidesWith(BIRD_BITMASK);
 
     // Add bird player
+    this.matter.world.setGravity(0, 0);
     this.bird = new Bird(this.matter.world, this, config.scale.width / 4, config.scale.height / 2);
     this.add.existing(this.bird);
-    // this.bird.setPlay(true);
-    this.bird.setIgnoreGravity(true);
 
     // Add destroyer after scene
     var destroyer = this.matter.add.rectangle(-100, config.scale.height / 2, 100, config.scale.height, {ignoreGravity: true, isStatic: true});
@@ -92,21 +94,23 @@ export default class GameScene extends Phaser.Scene {
 
     // Click screen event
     this.input.on('pointerdown', () => {
-      if (!this.isMoving) {
-        // Start play
-        this.isMoving = true;
-        this.bird?.setIgnoreGravity(false);
-        this.title?.destroy();
-        this.instruction?.destroy();
+      if (this.isAlive) {
+        if (!this.isMoving) {
+          // Start play
+          this.isMoving = true;
+          this.matter.world.setGravity(0, 1.5);
+          this.title?.destroy();
+          this.instruction?.destroy();
 
-        // Add score display
-        this.score = new Score(this, config.scale.width - 32, 38);
-        this.add.existing(this.score);
-        this.score.setDepth(4);
-        this.score.setScore(0);
+          // Add score display
+          this.score = new Score(this, config.scale.width - 32, 38);
+          this.add.existing(this.score);
+          this.score.setDepth(4);
+          this.score.setScore(0);
+        }
+        this.bird?.setPlay(true);
+        this.sound.play('fly');
       }
-      this.bird?.setPlay(true);
-      this.sound.play('fly');
     }, this)
 
     // Set collision event
@@ -168,15 +172,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   handleCollide(event: {pairs: {bodyA: MatterJS.BodyType, bodyB: MatterJS.BodyType}[]}) {
-    for (var pair of event.pairs) {
+    for (let pair of event.pairs) {
       var catA = pair.bodyA.collisionFilter.category;
       var catB = pair.bodyB.collisionFilter.category;
       if ((catA == BIRD_BITMASK && catB == BASE_BITMASK) || (catA == BASE_BITMASK && catB == BIRD_BITMASK)) {
-        this.bird?.setAlive(false);
         if (this.isMoving) {
-          this.sound.play('hit');
           this.isMoving = false;
           this.isAlive = false;
+          this.bird?.setAlive(false);
+          this.sound.play('hit');
           for (let body of this.movers) {
             body.friction = 1;
             body.frictionAir = 1;
@@ -185,6 +189,7 @@ export default class GameScene extends Phaser.Scene {
           this.time.addEvent({
             delay: 500,
             callback: () => {
+              if (!this.isMoving)
               this.cameras.main.fadeOut(500);
             },
             callbackScope: this
@@ -192,6 +197,7 @@ export default class GameScene extends Phaser.Scene {
           this.time.addEvent({
             delay: 1000,
             callback: () => {
+              if (!this.isMoving)
               this.scene.start('OverScene', {score: this.score?.getScore()});
             },
             callbackScope: this
