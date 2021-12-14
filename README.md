@@ -1,9 +1,16 @@
 # Flappy Bird Web
-
 A simple flappy bird minigame for web browsers using Phaser 3 game framework.
-Deployed at: [here](https://phassy-bird.vercel.app/)
 
-## Available Commands
+## Play on web
+The minigame is available to play on browser, either on PC or mobile. Deployed at: [here](https://phassy-bird.vercel.app/).
+
+## Some screenshots
+<p align="center">
+<img src="screenshot/bird1.gif" width="45%" alt="screen1">
+<img src="screenshot/bird2.gif" width="45%" alt="screen2">
+</p>
+
+## Run the project
 
 | Command | Description |
 |---------|-------------|
