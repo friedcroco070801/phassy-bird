@@ -185,6 +185,7 @@ export default class GameScene extends Phaser.Scene {
             body.friction = 1;
             body.frictionAir = 1;
             body.frictionStatic = 1;
+            body.gameObject?.setStatic(true)
           }
           this.time.addEvent({
             delay: 500,
